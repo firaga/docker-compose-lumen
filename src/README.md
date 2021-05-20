@@ -1,1 +1,0 @@
-product directory. ex: public/index.php
