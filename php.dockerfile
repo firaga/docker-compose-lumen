@@ -40,3 +40,7 @@ RUN echo '/opt/Ice-3.7.3/lib/x86_64-linux-gnu/' > /etc/ld.so.conf.d/ice.conf \
         /usr/local/src/ice-3.7.3 \
         /usr/local/src/v3.7.3.zip \
         /opt/Ice-3.7.3/bin/*
+RUN pecl install xdebug \
+    && docker-php-ext-enable xdebug
+RUN mkdir -p /data/logs/business/web/ \
+    && chown www-data:www-data  /data/logs/business/web/

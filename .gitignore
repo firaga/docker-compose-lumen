@@ -2,3 +2,5 @@ mysql
 .DS_Store
 .idea
 src/
+id_rsa
+.env

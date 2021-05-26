@@ -12,7 +12,7 @@ services:
     ports:
       - 80:80
     volumes:
-      - ./src:/var/www/html:delegated
+      - ${WORK_DIR}:/var/www/html:delegated
     depends_on:
       - php
       - redis
@@ -43,7 +43,7 @@ services:
       dockerfile: php.dockerfile
     container_name: php
     volumes:
-      - ./src:/var/www/html:delegated
+      - ${WORK_DIR}:/var/www/html:delegated
     networks:
       - laravel
 
@@ -62,7 +62,7 @@ services:
       dockerfile: composer.dockerfile
     container_name: composer
     volumes:
-      - ./src:/var/www/html
+      - ${WORK_DIR}:/var/www/html
     working_dir: /var/www/html
     depends_on:
       - php
