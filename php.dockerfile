@@ -9,7 +9,17 @@ RUN chown www-data:www-data /var/www/html
 
 WORKDIR /var/www/html
 
+RUN mkdir -p /data/logs/business/web/ \
+    && chown -R laravel:laravel  /data/logs/business/web/
+
 RUN docker-php-ext-install pdo pdo_mysql
+
+RUN pecl install xdebug \
+    && docker-php-ext-enable xdebug \
+    && pecl install xhprof \
+    && docker-php-ext-enable xhprof \
+    && pecl install redis \
+    && docker-php-ext-enable redis
 
 # Install ice
 RUN set -eux; \
@@ -40,7 +50,3 @@ RUN echo '/opt/Ice-3.7.3/lib/x86_64-linux-gnu/' > /etc/ld.so.conf.d/ice.conf \
         /usr/local/src/ice-3.7.3 \
         /usr/local/src/v3.7.3.zip \
         /opt/Ice-3.7.3/bin/*
-RUN pecl install xdebug \
-    && docker-php-ext-enable xdebug
-RUN mkdir -p /data/logs/business/web/ \
-    && chown www-data:www-data  /data/logs/business/web/
