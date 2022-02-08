@@ -4,3 +4,4 @@ mysql
 src/
 id_rsa
 .env
+nginx/sslkey

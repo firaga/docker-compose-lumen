@@ -2,24 +2,18 @@ FROM php:7.4-fpm
 
 ADD ./php/www.conf /usr/local/etc/php-fpm.d/
 
-RUN addgroup --gid 1000 laravel
-RUN adduser --ingroup laravel  --shell /bin/sh --disabled-login --disabled-password --quiet laravel
-RUN mkdir -p /var/www/html
-RUN chown www-data:www-data /var/www/html
+RUN addgroup --gid 1000 laravel \
+    && adduser --ingroup laravel  --shell /bin/sh --disabled-login --disabled-password --quiet laravel \
+    && mkdir -p /var/www/html \
+    && chown www-data:www-data /var/www/html \
+    && mkdir -p /data/logs/business/web/ \
+    && chown -R laravel:laravel  /data/logs/business/web/
 
 WORKDIR /var/www/html
 
-RUN mkdir -p /data/logs/business/web/ \
-    && chown -R laravel:laravel  /data/logs/business/web/
-
-RUN docker-php-ext-install pdo pdo_mysql
-
-RUN pecl install xdebug \
-    && docker-php-ext-enable xdebug \
-    && pecl install xhprof \
-    && docker-php-ext-enable xhprof \
-    && pecl install redis \
-    && docker-php-ext-enable redis
+RUN docker-php-ext-install pdo pdo_mysql \
+    && pecl install xdebug xhprof redis\
+    && docker-php-ext-enable xdebug xhprof redis
 
 # Install ice
 RUN set -eux; \
